@@ -15,9 +15,12 @@ let getReposByUsername = (username) => {
       'Authorization': `token ${config.TOKEN}`
     }
   };
-  axios(options)
+  return axios(options)
     .then(function(response) {
-      console.log(response)
+      console.log(`${response.data.length} Repos found`);
+      console.log(`First Repo: ${response.data[0].full_name} `)
+      // console.log(response.data[0])
+      return response.data;
     })
 }
 
