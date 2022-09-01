@@ -10,8 +10,20 @@ class App extends React.Component {
     this.state = {
       repos: []
     }
+    this.componentDidMount = this.componentDidMount.bind(this);
 
   }
+
+  componentDidMount() {
+    console.log("Component did mount")
+    $.get('/repos')
+    .then(response => {
+      console.log(response)
+      this.setState({repos: response})
+    })
+  }
+
+
 
   search (term) {
     console.log(`${term} was searched`);

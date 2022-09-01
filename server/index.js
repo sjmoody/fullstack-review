@@ -28,6 +28,7 @@ app.get('/repos', function (req, res) {
     .then(data => {
       if(!data) {throw(data)}
       console.log(`back in Express, data returned of length: ${data.length} `)
+      res.send(data)
     })
     .catch(err => {
       console.log(`error: ${err}`)
