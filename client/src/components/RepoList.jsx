@@ -4,17 +4,12 @@ import Table from 'react-bootstrap/Table'
 const RepoList = (props) => (
   <div>
     <h4>
-    There are {props.total} repos.
-    </h4>
-    <h4>
     Top {props.repos.length} repos Sorted by size
     </h4>
-
-
-    <Table striped bordered hover size='sm'>
+    <Table responsive striped bordered hover size='sm' >
       <thead>
         <tr>
-          <th>ID</th>
+          <th>Owner</th>
           <th>Repo Name</th>
           <th>Size</th>
           <th>Watchers Count</th>
@@ -24,16 +19,19 @@ const RepoList = (props) => (
         {props.repos.map((repo) => {
           return(
             <tr key={repo.id}>
-              <td>{repo.id}</td>
+              <td>{repo.owner.login}</td>
               <td><a href={repo.html_url}>{repo.name}</a></td>
               <td>{repo.size}</td>
               <td>{repo.watchers_count}</td>
+
             </tr>
           )
         })}
       </tbody>
     </Table>
-
+    <h4>
+    There are {props.total} repos.
+    </h4>
   </div>
 )
 // const RepoList = (props) => (

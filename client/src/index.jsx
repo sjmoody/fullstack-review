@@ -26,7 +26,17 @@ class App extends React.Component {
     })
   }
 
-
+  searchRpp2205() {
+    console.log("Big search initiated")
+    let studentsArr = [
+      'wulfmatik', 'bbissing', 'camjhirsh', 'chelseapae', 'puhpx', 'VoidWizid', 'dkim1017', 'malexander6',
+      'bubsinthemountains', 'huantran123', 'KenKurita', 'KDD87', 'mattdailey173', 'matthewrmcivor', 'romanlaughs',
+      'netbek932', 'h-sheeva', 'taoshika127', 'staceypereira1', 'sjmoody', 'viviennema', 'daisydingdx', 'pyc0422',
+      'Yui1002', 'yunsupj', 'zacharyatha']
+      for (var student of studentsArr) {
+        this.search(student)
+      }
+  }
 
   search (term) {
     console.log(`${term} was searched`);
@@ -58,7 +68,7 @@ class App extends React.Component {
     return (<div>
       <h1>Github Fetcher</h1>
       <RepoList repos={this.state.repos} total={this.state.total}/>
-      <Search onSearch={this.search.bind(this)}/>
+      <Search onSearchRpp2205={this.searchRpp2205.bind(this)} onSearch={this.search.bind(this)}/>
     </div>)
   }
 }
