@@ -26,7 +26,6 @@ const RepoList = (props) => (
             <tr key={repo.id}>
               <td>{repo.id}</td>
               <td><a href={repo.html_url}>{repo.name}</a></td>
-              <td>{repo.html_url}</td>
               <td>{repo.size}</td>
               <td>{repo.watchers_count}</td>
             </tr>
