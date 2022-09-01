@@ -71,8 +71,8 @@ let save = (repos) => {
         id: r.owner.id
       }
     }
-    // const res =  Repo.replaceOne({id: doc.id}, {doc}, {upsert: true} )
-    const res = Repo.findOneAndUpdate({id: doc.id}, {doc}, {upsert:true})
+    const res =  Repo.replaceOne({id: doc.id}, doc, {upsert: true} )
+    // const res = Repo.findOneAndUpdate({id: doc.id}, {doc}, {upsert:true})
     res.then((data) => {
       data && data._id && console.log(`Previous document for id ${doc.id}: ${data._id} matching repo id ${data.id}`)
 
@@ -89,10 +89,12 @@ let save = (repos) => {
 // }
 
 let retrieveTop25 = async () => {
-  const query = Repo.find({}).sort({watchers_count: 1}).limit(25)
+  const query = Repo.find({}).sort({size: -1}).limit(25)
+  const total = await Repo.count();
   const docs = await query;
-  console.log(`docs returned. Count: ${docs.length}`)
-  return docs;
+  console.log(`docs returned. Total count: ${total} and shortlist: ${docs.length}`)
+  return {docs, total}
+  // return docs;
 
 
 }

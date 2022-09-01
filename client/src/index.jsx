@@ -8,9 +8,10 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      repos: []
+      repos: [],
+      total: 0
     }
-    this.componentDidMount = this.componentDidMount.bind(this);
+    // this.componentDidMount = this.componentDidMount.bind(this);
 
   }
 
@@ -19,7 +20,9 @@ class App extends React.Component {
     $.get('/repos')
     .then(response => {
       console.log(response)
-      this.setState({repos: response})
+      this.setState({
+        repos: response.docs,
+        total: response.total})
     })
   }
 
@@ -41,7 +44,7 @@ class App extends React.Component {
   render () {
     return (<div>
       <h1>Github Fetcher</h1>
-      <RepoList repos={this.state.repos}/>
+      <RepoList repos={this.state.repos} total={this.state.total}/>
       <Search onSearch={this.search.bind(this)}/>
     </div>)
   }
