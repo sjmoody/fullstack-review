@@ -82,4 +82,20 @@ let save = (repos) => {
   return repos.length
 }
 
+// let retrieveTop25 = async () => {
+//   const res = await Repo.find({}).sort({watchers_count: 1}).limit(25);
+//   console.log(res.length)
+
+// }
+
+let retrieveTop25 = async () => {
+  const query = Repo.find({}).sort({watchers_count: 1}).limit(25)
+  const docs = await query;
+  console.log(`docs returned. Count: ${docs.length}`)
+  return docs;
+
+
+}
+
 module.exports.save = save;
+module.exports.retrieveTop25 = retrieveTop25;

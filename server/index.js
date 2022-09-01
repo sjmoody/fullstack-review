@@ -9,11 +9,9 @@ app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.json());
 
 app.post('/repos', function (req, res) {
-  // console.log(`request made to post. Req: ${req}`);
-  console.log(`request made to post. Req term: ${req.body.term}`);
   const promise = Promise.resolve(gh.getReposByUsername(req.body.term))
     .then(data => {
-      console.log(`Data in server. First repo: ${data[0].full_name}`)
+      // console.log(`Data in server. First repo: ${data[0].full_name}`)
       // save repos
       db.save(data)
     })
@@ -24,8 +22,18 @@ app.post('/repos', function (req, res) {
 });
 
 app.get('/repos', function (req, res) {
-  // TODO - your code here!
-  // This route should send back the top 25 repos
+  /* Write a GET /repos endpoint that retrieves the top 25 repos stored in your database, sorted by the criteria you decided on earlier.
+  */
+  const promise = Promise.resolve(db.retrieveTop25())
+    .then(data => {
+      if(!data) {throw(data)}
+      console.log(`back in Express, data returned of length: ${data.length} `)
+    })
+    .catch(err => {
+      console.log(`error: ${err}`)
+    })
+
+
 });
 
 let port = 1128;
