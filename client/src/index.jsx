@@ -30,15 +30,28 @@ class App extends React.Component {
 
   search (term) {
     console.log(`${term} was searched`);
-    // TODO: use jQ ajax to send a POST request
     $.ajax({
       url: '/repos',
       type: 'POST',
       contentType: "application/json",
-      data: JSON.stringify({term}),
-      success: function(result) {console.log(result)}
-
+      data: JSON.stringify({term})
     })
+    .then(response => {
+      this.setState({
+        repos: response.docs,
+        total: response.total
+      })
+    })
+    // $.ajax({
+    //   url: '/repos',
+    //   type: 'POST',
+    //   contentType: "application/json",
+    //   data: JSON.stringify({term}),
+    //   success: function(result) {
+    //     console.log(`success from search: ${result}`)
+    //   }
+
+    // })
    }
 
   render () {

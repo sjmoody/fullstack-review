@@ -11,13 +11,19 @@ app.use(bodyParser.json());
 app.post('/repos', function (req, res) {
   const promise = Promise.resolve(gh.getReposByUsername(req.body.term))
     .then(data => {
-      // console.log(`Data in server. First repo: ${data[0].full_name}`)
-      // save repos
       db.save(data)
     })
     .then(result => {
-      console.log(`reached result: ${result}`)
-      res.send(`Result of save: ${result}`);
+      console.log(`result of github query: ${result}`)
+      return db.retrieveTop25()
+      // res.send(`Result of save: ${result}`);
+    }).then(data => {
+      if(!data) {throw(data)}
+      console.log(`after github, received 25 results: ${data.docs.length}` )
+      res.send(data)
+    })
+    .catch(err => {
+      console.log(`error: ${error}`)
     })
 });
 
