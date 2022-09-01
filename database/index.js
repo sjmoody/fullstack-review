@@ -25,6 +25,32 @@ let repoSchema = mongoose.Schema({
 
 let Repo = mongoose.model('Repo', repoSchema);
 
+// let save = (repos) => {
+//   Promise.all(repos.map(r => {
+//     let doc = { // init the sub doc to try save
+//       id: r.id,
+//       name: r.name,
+//       full_name: r.full_name,
+//       html_url: r.html_url,
+//       description: r.description, // often null
+//       created_at: r.created_at,
+//       size: r.size,
+//       stargazers_count: r.stargazers_count,
+//       watchers_count: r.watchers_count,
+//       forks_count: r.forks_count,
+//       owner: {
+//         login: r.owner.login,
+//         id: r.owner.id
+//       }
+//     }
+//     console.log(`Repo to save: ${doc.full_name} with id: ${doc.id}`)
+//     Repo.findOneAndUpdate({id: doc.id}, {doc}, {upsert:true})
+// }))
+//   .then((arrayOfData) => {
+//   console.log(arrayOfData)
+// })
+// }
+
 let save = (repos) => {
   console.log(`Saving in db! Size: ${repos.length}`)
   for (var r of repos) {
@@ -48,21 +74,12 @@ let save = (repos) => {
     // const res =  Repo.replaceOne({id: doc.id}, {doc}, {upsert: true} )
     const res = Repo.findOneAndUpdate({id: doc.id}, {doc}, {upsert:true})
     res.then((data) => {
-      console.log(`Previous document for id ${doc.id}: ${data._id} matching repo id ${data._id}`)
+      data && data._id && console.log(`Previous document for id ${doc.id}: ${data._id} matching repo id ${data.id}`)
 
     })
-
-
-
-
-    // console.log(`doc created to try save. id: ${doc.id}; owner: ${doc.owner.login}; owner id: ${doc.owner.id}; name: ${doc.name}; description: ${doc.description}; size: ${doc.size}; stargazers: ${doc.stargazers_count}; watchers: ${doc.watchers_count}; forks: ${doc.forks_count}`)
   }
+  console.log(`Finished saving in db. Size: ${repos.length}`) // this is not async
   return repos.length
 }
-// let save = (/* TODO */) => {
-//   // TODO: Your code here
-//   // This function should save a repo or repos to
-//   // the MongoDB
-// }
 
 module.exports.save = save;
